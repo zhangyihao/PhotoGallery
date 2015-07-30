@@ -72,7 +72,7 @@ public class FilckrFetchr {
             conn.getOutputStream().close();
 
             if(conn.getResponseCode()!=HttpURLConnection.HTTP_OK) {
-            	throw new RuntimeException("请求url失败");
+            	throw new RuntimeException("请求url失败...");
             }
             
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
