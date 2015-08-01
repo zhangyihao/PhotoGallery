@@ -15,7 +15,7 @@ import android.util.Log;
 
 import com.zhangyihao.photogallery.entity.GalleryItem;
 
-public class FilckrFetchr {
+public class FlickrFetchr {
 	public static final String TAG = "FlickrFetchr";
 	
 	private static final String ENDPOINT = "http://www.bababian.com/xmlrpc";
@@ -23,7 +23,7 @@ public class FilckrFetchr {
 	private static final String METHOD_GET_RECENT = "bababian.photo.getRecommendPhoto";
 	
 	
-	byte[] getUrlBytes(String urlSpec) throws Exception {
+	public byte[] getUrlBytes(String urlSpec) throws Exception {
 		URL url = new URL(urlSpec);
 		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 		try {
@@ -107,13 +107,14 @@ public class FilckrFetchr {
 				String nodeName = parser.getName();
 				switch(eventType) {
 				case XmlPullParser.START_TAG:
-					if("struct".equals(nodeName)) {
-						item = new GalleryItem();
-					} else if("name".equals(nodeName)) {
+					if("name".equals(nodeName)) {
 						fieldName = parser.nextText();
 					} else if("string".equals(nodeName)) {
 						value = parser.nextText();
 						if("did".equals(fieldName)) {
+							if(item==null) {
+								item = new GalleryItem();
+							}
 							item.setId(value);
 						} else if("src".equals(fieldName)) {
 							item.setUrl(value);
@@ -124,7 +125,9 @@ public class FilckrFetchr {
 					break;
 				case XmlPullParser.END_TAG:
 					if("struct".equals(nodeName)) {
-						items.add(item);
+						if(item!=null) {
+							items.add(item);
+						}
 						item = null;
 						fieldName = "";
 						value = "";
@@ -138,34 +141,7 @@ public class FilckrFetchr {
 		} catch (Exception e) {
 			
 		}
-		
-//		int eventType = parser.next();
-//		while(eventType!=XmlPullParser.END_DOCUMENT) {
-//			if(eventType==XmlPullParser.START_TAG) {
-//				if("struct".equals(parser.getName())) {
-//					GalleryItem item = new GalleryItem();
-//					parseMember(item, parser);
-//				}
-//			}
-//			eventType = parser.next();
-//		}
 	}
-	
-//	private void parseMember(GalleryItem item, XmlPullParser parser) throws Exception {
-//		int eventType = parser.next();
-//		if(eventType == XmlPullParser.START_TAG) {
-//			if("member".equals(parser.getName())) {
-//				int type = parser.next();
-//				if(type == XmlPullParser.START_TAG) {
-//					String fieldName = "";
-//					String value = "";
-//					if("name".equals(parser.getName())) {
-//						fieldName = parser.nextText();
-//					} 
-//				}
-//			}
-//		}
-//	}
 	
 	private String buildXmlRequestString() {
 		StringBuilder xml = new StringBuilder();
