@@ -22,6 +22,7 @@ public class FlickrFetchr {
 	private static final String API_KEY = "AF1EB81DEA9066C2A8B30458EDA9FE99AK";
 	private static final String METHOD_GET_RECENT = "bababian.photo.getRecommendPhoto";
 	
+	public static final String PREF_SEARCH_QUERY = "searchQuery";
 	
 	public byte[] getUrlBytes(String urlSpec) throws Exception {
 		URL url = new URL(urlSpec);
@@ -95,6 +96,10 @@ public class FlickrFetchr {
 		} finally {
 		}
 		return items;
+	}
+	
+	public List<GalleryItem> queryItems(String query) {
+		return new ArrayList<GalleryItem>();
 	}
 	
 	private void parseItem(List<GalleryItem> items, XmlPullParser parser) throws Exception {
