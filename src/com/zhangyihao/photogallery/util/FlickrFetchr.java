@@ -23,6 +23,7 @@ public class FlickrFetchr {
 	private static final String METHOD_GET_RECENT = "bababian.photo.getRecommendPhoto";
 	
 	public static final String PREF_SEARCH_QUERY = "searchQuery";
+	public static final String PREF_SEARCH_RESULT_ID = "lastResultId";
 	
 	public byte[] getUrlBytes(String urlSpec) throws Exception {
 		URL url = new URL(urlSpec);
