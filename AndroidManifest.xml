@@ -6,6 +6,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     
     <uses-sdk
         android:minSdkVersion="8"
@@ -32,6 +33,13 @@
                 android:resource="@xml/searchable" />
         </activity>
         <service android:name="com.zhangyihao.photogallery.PollService" />
+        <receiver android:name="com.zhangyihao.photogallery.StartupReceiver" >
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
+    
+    
 
 </manifest>
